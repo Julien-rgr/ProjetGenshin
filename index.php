@@ -16,8 +16,4 @@ $plate = new \League\Plates\Engine(__DIR__.DIRECTORY_SEPARATOR.'Views');
 $mainController = new MainController($plate);
 $mainController->index();
 
-$testDAO = new PersonnageDAO();
-var_dump($testDAO->getAll());
-var_dump($testDAO->getbyId(1));
-var_dump($testDAO->getbyId(2));
 
