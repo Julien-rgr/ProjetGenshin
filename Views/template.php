@@ -9,8 +9,18 @@
 <body>
 <header>
     <!-- Menu -->
-    <nav>
+    <nav class="topnav">
+        <!-- Accueil: pas d'action -->
+        <a class="navlink <?= ($currentAction ?? 'index') === 'index' ? 'active' : '' ?>" href="index.php">Accueil</a>
+
+        <!-- Actions de la partie 3 §1.1 -->
+        <a class="navlink <?= ($currentAction ?? '') === 'add-perso' ? 'active' : '' ?>" href="index.php?action=add-perso">Ajouter un perso</a>
+        <a class="navlink <?= ($currentAction ?? '') === 'add-perso-element' ? 'active' : '' ?>" href="index.php?action=add-perso-element">Ajouter un élément</a>
+        <a class="navlink <?= ($currentAction ?? '') === 'logs' ? 'active' : '' ?>" href="index.php?action=logs">Logs</a>
+        <a class="navlink <?= ($currentAction ?? '') === 'login' ? 'active' : '' ?>" href="index.php?action=login">Se connecter</a>
     </nav>
+
+
 </header>
 <!-- #contenu -->
 <main id="contenu">

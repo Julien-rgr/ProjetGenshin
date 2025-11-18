@@ -15,8 +15,8 @@
                         <p><strong>Rareté :</strong> ⭐<?= $this->e($p->getRarity()) ?></p>
 
                         <div class="actions">
-                            <a href="index.php?action=edit&id=<?= $this->e($p->getId()) ?>" class="btn edit">✏️ Modifier</a>
-                            <a href="index.php?action=delete&id=<?= $this->e($p->getId()) ?>" class="btn delete">🗑️ Supprimer</a>
+                            <a href="index.php?action=edit-perso&id=<?= $this->e($p->getId()) ?>" class="btn edit">✏️ Modifier</a>
+                            <a href="index.php?action=del-perso&id=<?= $this->e($p->getId()) ?>" class="btn delete">🗑️ Supprimer</a>
                         </div>
                     </div>
                 </div>

@@ -103,3 +103,23 @@ body {
 .btn:hover {
     background: rgba(255, 255, 255, 0.3);
 }
+
+.topnav {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background: #111;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.navlink {
+    color: #ddd;
+    text-decoration: none;
+    padding: 0.4rem 0.7rem;
+    border-radius: 8px;
+    transition: background .2s ease, color .2s ease;
+}
+
+.navlink:hover { background: rgba(255,255,255,.08); color: #fff; }
+.navlink.active { background: #2d6cdf; color: #fff; }
