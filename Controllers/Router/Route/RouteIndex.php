@@ -1,9 +1,9 @@
 <?php
 
-namespace Controllers\Router;
+namespace Controllers\Router\Route;
 
-use Controllers\Router\Route\Route;
 use Controllers\MainController;
+use Controllers\Router\Route;
 
 class RouteIndex extends Route
 {

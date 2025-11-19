@@ -1,11 +1,19 @@
 <?php
 
-namespace Controllers\Router\Route;
+namespace Controllers\Router;
 
 use Exception;
 
 abstract class Route
 {
+
+    protected \League\Plates\Engine $templates;
+
+    public function __construct()
+    {
+        $this->templates = new \League\Plates\Engine(__DIR__ . '/../../../Views');
+    }
+
     public function action($params = [], $method = 'GET'): void
     {
         if (strtoupper($method) === 'POST') {
@@ -15,9 +23,7 @@ abstract class Route
         }
     }
 
-    /**
-     * @throws Exception
-     */
+
     protected function getParam(array $array, string $paramName, bool $canBeEmpty = true) {
         if (isset($array[$paramName])) {
             if(!$canBeEmpty && empty($array[$paramName])) {
