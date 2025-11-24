@@ -2,10 +2,10 @@
 
 namespace Controllers\Router\Route;
 
-use Controllers\Router\Route;
 use Controllers\PersoController;
+use Controllers\Router\Route;
 
-class RouteAddPerso extends Route
+class RouteEditPerso extends Route
 {
 
     private PersoController $persoController;
@@ -17,10 +17,14 @@ class RouteAddPerso extends Route
     }
     public function get($params = []): void
     {
-        $this->persoController->displayAddPerso($params);
+
+        $id = $this->getParam($params, "id", false);
+
+        $this->persoController->displayEditPerso();
     }
 
     public function post($params = []): void
     {
+        // Non utilisé
     }
 }

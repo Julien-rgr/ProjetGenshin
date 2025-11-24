@@ -2,10 +2,13 @@
 
 namespace Controllers\Router;
 
-use Controllers\LoginController;
+use Controllers\ElementController;
 use Controllers\MainController;
+use Controllers\PersoController;
 use Controllers\Router\Route\RouteAddPerso;
 use Controllers\Router\Route\RouteAddPersoElement;
+use Controllers\Router\Route\RouteDelPerso;
+use Controllers\Router\Route\RouteEditPerso;
 use Controllers\Router\Route\RouteIndex;
 use Controllers\Router\Route\RouteLogin;
 use Controllers\Router\Route\RouteLogs;
@@ -29,7 +32,9 @@ class Router
     {
 
         $this->ctrlList = [
-            "main"  => new MainController(),
+            "main"  => new MainController(new \League\Plates\Engine(__DIR__ . '/../../Views')),
+            "perso" => new PersoController(new \League\Plates\Engine(__DIR__ . '/../../Views')),
+            "element" => new ElementController(new \League\Plates\Engine(__DIR__ . '/../../Views')),
 
 
         ];
@@ -40,10 +45,12 @@ class Router
     {
         $this->routeList = [
             "index"             => new RouteIndex($this->ctrlList["main"]),
-            "add-perso"         => new RouteAddPerso($this->ctrlList["main"]),
-            "add-perso-element" => new RouteAddPersoElement($this->ctrlList["main"]),
+            "add-perso"         => new RouteAddPerso($this->ctrlList["perso"]),
+            "add-perso-element" => new RouteAddPersoElement($this->ctrlList["element"]),
             "login"             => new RouteLogin($this->ctrlList["main"]),
             "logs"              => new RouteLogs($this->ctrlList["main"]),
+            "edit-perso"        => new RouteEditPerso($this->ctrlList["perso"]),
+            "del-perso"         => new RouteDelPerso($this->ctrlList["perso"]),
         ];
     }
 

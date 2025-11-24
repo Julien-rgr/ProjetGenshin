@@ -123,3 +123,120 @@ body {
 
 .navlink:hover { background: rgba(255,255,255,.08); color: #fff; }
 .navlink.active { background: #2d6cdf; color: #fff; }
+
+
+.form-container {
+    background: rgba(20, 30, 60, 0.65);
+    padding: 2rem;
+    border-radius: 16px;
+    max-width: 650px;
+    margin: 3rem auto;
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(120,150,255,0.25);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.form-container h1 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    font-weight: 700;
+    color: #9dc4ff;
+    text-shadow: 0 0 8px rgba(80,120,255,0.4);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.4rem;
+}
+
+.form-group label {
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #aaccff;
+    font-size: 1rem;
+}
+
+.form-group input,
+.form-group select {
+    background: rgba(255,255,255,0.10);
+    border: 1px solid rgba(130,160,255,0.35);
+    padding: 0.7rem;
+    border-radius: 10px;
+    color: #e7eeff;
+    font-size: 1rem;
+    transition: all .25s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #6aa8ff;
+    background: rgba(255,255,255,0.15);
+}
+
+/* Select: meilleure lisibilité */
+.form-group select {
+    background: rgba(255,255,255,0.12);
+}
+
+.form-group select option {
+    background: #1b2238;
+    color: #e6eeff;
+}
+
+.form-group select option:hover {
+    background: #283350 !important;
+}
+
+/* Bouton principal */
+.btn-submit {
+    width: 100%;
+    padding: 0.9rem;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(90deg, #6aa8ff, #4c82e0);
+    color: #fff;
+    font-size: 1.15rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 1.5rem;
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.btn-submit:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(70,130,255,0.4);
+}
+
+/* Messages (confirmation delete) */
+.message-box {
+    margin: 1rem auto;
+    max-width: 650px;
+    background: rgba(70,130,255,0.10);
+    padding: 1rem;
+    border-left: 4px solid #6aa8ff;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #dce8ff;
+}
+
+/* ---- Correction Select ---- */
+.form-group select {
+    background: #2a2a2a !important;   /* gris foncé lisible */
+    color: #fff !important;           /* texte blanc visible */
+    border: 1px solid #ffce57 !important;
+}
+
+/* Options du menu déroulant */
+.form-group select option {
+    background: #2a2a2a;
+    color: #fff;
+    padding: 0.5rem;
+}
+
+/* Option survolée */
+.form-group select option:hover {
+    background: #444 !important;
+}

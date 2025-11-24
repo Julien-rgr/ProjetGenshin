@@ -3,7 +3,7 @@ namespace Models;
 class PersonnageDAO extends BasePDODAO
 {
 
-    public function getAll(): Array {
+    public function getAll(): array {
         $sql = 'SELECT * FROM personnage';
         $personnages = $this->execRequest($sql)->fetchAll();
         $personnagesDTO = array();

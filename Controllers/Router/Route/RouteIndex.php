@@ -7,12 +7,12 @@ use Controllers\Router\Route;
 
 class RouteIndex extends Route
 {
-    private MainController $controller;
+   private MainController $controller;
 
-    public function __construct()
+    public function __construct(MainController $controller)
     {
 
-        $this->controller = new MainController();
+        $this->controller = $controller;
     }
 
     public function get($params = []): void

@@ -6,14 +6,6 @@ use Exception;
 
 abstract class Route
 {
-
-    protected \League\Plates\Engine $templates;
-
-    public function __construct()
-    {
-        $this->templates = new \League\Plates\Engine(__DIR__ . '/../../../Views');
-    }
-
     public function action($params = [], $method = 'GET'): void
     {
         if (strtoupper($method) === 'POST') {
