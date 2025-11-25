@@ -1,49 +1,84 @@
 <?php
 namespace Controllers;
 
-
+use League\Plates\Engine;
 use Models\PersonnageDAO;
 
 class MainController {
 
-    private \League\Plates\Engine $templates;
-    public function __construct(\League\Plates\Engine $templates) {
+    private Engine $templates;
+
+    public function __construct(Engine $templates) {
         $this->templates = $templates;
     }
 
-    public function displayLogs(){
-
+    /**
+     * Page des logs
+     */
+    public function displayLogs(): void
+    {
         echo $this->templates->render('add-perso-element');
     }
 
-    public function displayLogin(){
-
+    /**
+     * Page Login
+     */
+    public function displayLogin(): void
+    {
         echo $this->templates->render('login');
     }
 
-    public function displayIndex(){
-
+    /**
+     * Affiche simplement index (pas utilisée pour la home avec personnages)
+     */
+    public function displayIndex(): void
+    {
         echo $this->templates->render('index');
     }
 
-
+    /**
+     * Page d’accueil — Liste tous les personnages + message optionnel
+     */
     public function index(): void
     {
+        $dao = new \Models\PersonnageDAO();
+        $list = $dao->getAll();
 
+        // Récupère le tri choisi
+        $sort = $_GET['sort'] ?? null;
 
+        if ($sort) {
+            usort($list, function ($a, $b) use ($sort) {
 
-            $dao = new \Models\PersonnageDAO();
-            $listPersonnage = $dao->getAll();
+                switch ($sort) {
 
-                $view = 'home';
-                $vars = [
-                    'listPersonnage' => $listPersonnage,
+                    case 'name':
+                        return strcmp($a->getName(), $b->getName());
 
-                ];
+                    case 'name_desc':
+                        return strcmp($b->getName(), $a->getName());
 
+                    case 'rarity':
+                        return $a->getRarity() <=> $b->getRarity();
 
+                    case 'rarity_desc':
+                        return $b->getRarity() <=> $a->getRarity();
 
-        echo $this->templates->render($view, $vars);
+                    case 'element':
+                        return strcmp($a->getElement(), $b->getElement());
+
+                    case 'class':
+                        return strcmp($a->getUnitclass(), $b->getUnitclass());
+                }
+
+                return 0;
+            });
+        }
+
+        echo $this->templates->render('home', [
+            'listPersonnage' => $list,
+            'message' => $_GET['message'] ?? null
+        ]);
     }
 
 }

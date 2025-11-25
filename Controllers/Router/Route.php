@@ -6,6 +6,15 @@ use Exception;
 
 abstract class Route
 {
+    protected \League\Plates\Engine $templates;
+
+    public function __construct()
+    {
+        // __DIR__ = Controllers/Router
+        // On remonte jusqu’à /Views
+        $this->templates = new \League\Plates\Engine(__DIR__ . '/../../Views');
+    }
+
     public function action($params = [], $method = 'GET'): void
     {
         if (strtoupper($method) === 'POST') {
@@ -15,21 +24,16 @@ abstract class Route
         }
     }
 
-
     protected function getParam(array $array, string $paramName, bool $canBeEmpty = true) {
         if (isset($array[$paramName])) {
-            if(!$canBeEmpty && empty($array[$paramName])) {
+            if (!$canBeEmpty && empty($array[$paramName])) {
                 throw new Exception("Paramètre '$paramName' vide");
             }
             return $array[$paramName];
         }
-        else {
-            throw new Exception("Paramètre '$paramName' absent");
-        }
+        throw new Exception("Paramètre '$paramName' absent");
     }
 
     public abstract function get($params = []);
-
     public abstract function post($params = []);
-
 }

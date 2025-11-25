@@ -240,3 +240,92 @@ body {
 .form-group select option:hover {
     background: #444 !important;
 }
+
+.details-container {
+    width: 90%;
+    max-width: 1000px;
+    margin: 2rem auto;
+}
+
+.detail-card {
+    display: flex;
+    gap: 2rem;
+    background: rgba(255,255,255,0.05);
+    padding: 2rem;
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    backdrop-filter: blur(6px);
+}
+
+.detail-image {
+    width: 45%;
+    border-radius: 14px;
+    background-size: cover;
+    background-position: center;
+    height: 450px;
+}
+
+.detail-info {
+    flex: 1;
+}
+
+.detail-info h1 {
+    margin-top: 0;
+    color: #ffce57;
+    font-size: 2rem;
+}
+
+.detail-actions {
+    margin-top: 2rem;
+    display: flex;
+    gap: 1rem;
+}
+
+/* --- Barre de tri améliorée --- */
+.sorting-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.8rem;
+
+    margin: 0 auto 2rem auto;
+    padding: 0.8rem 1.2rem;
+
+    max-width: 600px;
+
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    backdrop-filter: blur(6px);
+}
+
+/* Select stylé */
+.sorting-bar select {
+    background: #1e1e1e;
+    color: #fff;
+    border: 1px solid #ffce57;
+    padding: 0.5rem 0.8rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    cursor: pointer;
+}
+
+/* Bouton Trier */
+.sort-btn {
+    background: linear-gradient(90deg, #4a90ff, #1c6be8);
+    color: white;
+    border: none;
+    padding: 0.55rem 1.1rem;
+    font-size: 0.95rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s ease;
+    font-weight: 600;
+}
+
+.sort-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(74, 144, 255, 0.4);
+}
+

@@ -12,6 +12,8 @@ use Controllers\Router\Route\RouteEditPerso;
 use Controllers\Router\Route\RouteIndex;
 use Controllers\Router\Route\RouteLogin;
 use Controllers\Router\Route\RouteLogs;
+use Controllers\Router\Route\RouteDetailPerso;
+
 use Exception;
 
 class Router
@@ -51,6 +53,8 @@ class Router
             "logs"              => new RouteLogs($this->ctrlList["main"]),
             "edit-perso"        => new RouteEditPerso($this->ctrlList["perso"]),
             "del-perso"         => new RouteDelPerso($this->ctrlList["perso"]),
+            "detail-perso"      => new RouteDetailPerso($this->ctrlList["perso"]),
+
         ];
     }
 
