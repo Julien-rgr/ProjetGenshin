@@ -4,21 +4,30 @@
 
     <h1>Ajouter un élément</h1>
 
+    <?php if (!empty($message)): ?>
+        <div class="message-box">
+            <?= $this->e($message) ?>
+        </div>
+    <?php endif; ?>
+
     <form method="post" action="index.php?action=add-perso-element">
 
+        <!-- Nom -->
         <div class="form-group">
-            <label>Nom de l’élément :</label>
+            <label>Nom :</label>
             <input type="text" name="name" required>
         </div>
 
+        <!-- Image -->
         <div class="form-group">
             <label>URL de l'image :</label>
-            <input type="text" name="image">
+            <input type="text" name="image" placeholder="URL de l'icône">
         </div>
 
+        <!-- Type -->
         <div class="form-group">
-            <label>Type de l’élément :</label>
-            <select name="type">
+            <label>Type :</label>
+            <select name="type" required>
                 <option value="element">Élément</option>
                 <option value="unitclass">Classe</option>
                 <option value="origin">Origine</option>
