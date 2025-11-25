@@ -27,26 +27,24 @@
         <!-- ÉLÉMENT -->
         <div class="form-group">
             <label>Élément :</label>
-            <select name="element">
-                <option value="pyro">Pyro</option>
-                <option value="hydro">Hydro</option>
-                <option value="anemo">Anemo</option>
-                <option value="cryo">Cryo</option>
-                <option value="electro">Electro</option>
-                <option value="geo">Geo</option>
-                <option value="dendro">Dendro</option>
+            <select name="element" required>
+                <?php foreach ($elements as $e): ?>
+                    <option value="<?= $e['id'] ?>">
+                        <?= $this->e($e['name']) ?>
+                    </option>
+                <?php endforeach; ?>
             </select>
         </div>
 
         <!-- CLASSE -->
         <div class="form-group">
             <label>Classe :</label>
-            <select name="class">
-                <option value="épéiste">Épéiste</option>
-                <option value="archer">Archer</option>
-                <option value="catalyseur">Catalyseur</option>
-                <option value="polemiste">Polemiste</option>
-                <option value="claymore">Claymore</option>
+            <select name="unitclass" required>
+                <?php foreach ($classes as $c): ?>
+                    <option value="<?= $c['id'] ?>">
+                        <?= $this->e($c['name']) ?>
+                    </option>
+                <?php endforeach; ?>
             </select>
         </div>
 
@@ -54,26 +52,22 @@
         <div class="form-group">
             <label>Origine :</label>
             <select name="origin">
-                <option value="mondstadt">Mondstadt</option>
-                <option value="liyue">Liyue</option>
-                <option value="inazuma">Inazuma</option>
-                <option value="sumeru">Sumeru</option>
-                <option value="fontaine">Fontaine</option>
-                <option value="natlan">Natlan</option>
-                <option value="snezhnaya">Snezhnaya</option>
-                <option value="nod-krai">Nod-Kraî</option>
+                <option value="">Aucune</option>
+                <?php foreach ($origins as $o): ?>
+                    <option value="<?= $o['id'] ?>">
+                        <?= $this->e($o['name']) ?>
+                    </option>
+                <?php endforeach; ?>
             </select>
         </div>
 
         <!-- RARETÉ -->
         <div class="form-group">
             <label>Rareté :</label>
-            <select name="rarity">
-                <option value="1">⭐ 1</option>
-                <option value="2">⭐ 2</option>
-                <option value="3">⭐ 3</option>
-                <option value="4">⭐ 4</option>
-                <option value="5">⭐ 5</option>
+            <select name="rarity" required>
+                <?php for ($i = 1; $i <= 5; $i++): ?>
+                    <option value="<?= $i ?>">⭐ <?= $i ?></option>
+                <?php endfor; ?>
             </select>
         </div>
 

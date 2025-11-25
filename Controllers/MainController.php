@@ -12,73 +12,41 @@ class MainController {
         $this->templates = $templates;
     }
 
-    /**
-     * Page des logs
-     */
-    public function displayLogs(): void
-    {
+    public function displayLogs(): void {
         echo $this->templates->render('add-perso-element');
     }
 
-    /**
-     * Page Login
-     */
-    public function displayLogin(): void
-    {
+    public function displayLogin(): void {
         echo $this->templates->render('login');
-    }
-
-    /**
-     * Affiche simplement index (pas utilisée pour la home avec personnages)
-     */
-    public function displayIndex(): void
-    {
-        echo $this->templates->render('index');
     }
 
     /**
      * Page d’accueil — Liste tous les personnages + message optionnel
      */
-    public function index(): void
+    public function index(?string $message = null): void
     {
-        $dao = new \Models\PersonnageDAO();
+        $dao = new PersonnageDAO();
         $list = $dao->getAll();
 
-        // Récupère le tri choisi
+        // Récupération du tri éventuel
         $sort = $_GET['sort'] ?? null;
 
         if ($sort) {
-            usort($list, function ($a, $b) use ($sort) {
+            usort($list, function($a, $b) use ($sort) {
 
-                switch ($sort) {
-
-                    case 'name':
-                        return strcmp($a->getName(), $b->getName());
-
-                    case 'name_desc':
-                        return strcmp($b->getName(), $a->getName());
-
-                    case 'rarity':
-                        return $a->getRarity() <=> $b->getRarity();
-
-                    case 'rarity_desc':
-                        return $b->getRarity() <=> $a->getRarity();
-
-                    case 'element':
-                        return strcmp($a->getElement(), $b->getElement());
-
-                    case 'class':
-                        return strcmp($a->getUnitclass(), $b->getUnitclass());
-                }
-
-                return 0;
+                return match ($sort) {
+                    'name'        => strcmp($a->getName(), $b->getName()),
+                    'name_desc'   => strcmp($b->getName(), $a->getName()),
+                    'rarity'      => $a->getRarity() <=> $b->getRarity(),
+                    'rarity_desc' => $b->getRarity() <=> $a->getRarity(),
+                    default       => 0,
+                };
             });
         }
 
         echo $this->templates->render('home', [
             'listPersonnage' => $list,
-            'message' => $_GET['message'] ?? null
+            'message' => $message
         ]);
     }
-
 }

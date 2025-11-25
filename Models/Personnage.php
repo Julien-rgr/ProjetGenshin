@@ -4,95 +4,72 @@ namespace Models;
 class Personnage {
     private ?string $id;
     private string $name;
-    private string $element;
-    private string $unitclass;
+    private int $element;      // ID de la table element
+    private int $unitclass;    // ID de la table unitclass
     private int $rarity;
-    private ?string $origin;
+    private ?int $origin;      // ID de la table origin
     private string $urlImg;
 
-    public function getId(): ?string
-    {
-        return $this->id;
-    }
+    // --- NOUVEAUX CHAMPS (venant des JOIN SQL) ---
+    private ?string $elementName = null;
+    private ?string $unitclassName = null;
+    private ?string $originName = null;
 
-    public function setId(?string $id): void
-    {
-        $this->id = $id;
-    }
+    // ------------------------
+    // GETTERS / SETTERS de base
+    // ------------------------
 
-    public function getName(): string
-    {
-        return $this->name;
-    }
+    public function getId(): ?string { return $this->id; }
+    public function setId(?string $id): void { $this->id = $id; }
 
-    public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
+    public function getName(): string { return $this->name; }
+    public function setName(string $name): void { $this->name = $name; }
 
-    public function getElement(): string
-    {
-        return $this->element;
-    }
+    public function getElement(): int { return $this->element; }
+    public function setElement(int $element): void { $this->element = $element; }
 
-    public function setElement(string $element): void
-    {
-        $this->element = $element;
-    }
+    public function getUnitclass(): int { return $this->unitclass; }
+    public function setUnitclass(int $unitclass): void { $this->unitclass = $unitclass; }
 
-    public function getUnitclass(): string
-    {
-        return $this->unitclass;
-    }
+    public function getRarity(): int { return $this->rarity; }
+    public function setRarity(int $rarity): void { $this->rarity = $rarity; }
 
-    public function setUnitclass(string $unitclass): void
-    {
-        $this->unitclass = $unitclass;
-    }
+    public function getOrigin(): ?int { return $this->origin; }
+    public function setOrigin(?int $origin): void { $this->origin = $origin; }
 
-    public function getRarity(): int
-    {
-        return $this->rarity;
-    }
+    public function getUrlImg(): string { return $this->urlImg; }
+    public function setUrlImg(string $urlImg): void { $this->urlImg = $urlImg; }
 
-    public function setRarity(int $rarity): void
-    {
-        $this->rarity = $rarity;
-    }
+    // ------------------------
+    // GETTERS / SETTERS des NOMS liés
+    // ------------------------
 
-    public function getOrigin(): ?string
-    {
-        return $this->origin;
-    }
+    public function getElementName(): ?string { return $this->elementName; }
+    public function setElementName(?string $n): void { $this->elementName = $n; }
 
-    public function setOrigin(?string $origin): void
-    {
-        $this->origin = $origin;
-    }
+    public function getUnitclassName(): ?string { return $this->unitclassName; }
+    public function setUnitclassName(?string $n): void { $this->unitclassName = $n; }
 
-    public function getUrlImg(): string
-    {
-        return $this->urlImg;
-    }
+    public function getOriginName(): ?string { return $this->originName; }
+    public function setOriginName(?string $n): void { $this->originName = $n; }
 
-    public function setUrlImg(string $urlImg): void
-    {
-        $this->urlImg = $urlImg;
-    }
-
-    // Hydratation
+    // ------------------------
+    // Hydratation automatique
+    // ------------------------
 
     public function hydrate(array $data){
         foreach ($data as $key => $value){
-            // On récupère le nom du setter correspondant à l'attribut
+
+            // generate setter name
             $method = 'set'.ucfirst($key);
+
+            // handle snake_case
             while (($pos = mb_strpos($method, '_')) !== false){
-                $method = mb_substr($method, 0, $pos) . ucfirst(mb_substr($method, $pos + 1));
+                $method = mb_substr($method, 0, $pos)
+                    . ucfirst(mb_substr($method, $pos + 1));
             }
 
-            // Si le setter correspondant existe
             if(method_exists($this, $method)){
-                // On appelle le setter
                 $this->$method($value);
             }
         }

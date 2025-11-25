@@ -5,6 +5,9 @@ namespace Controllers;
 use League\Plates\Engine;
 use Models\Personnage;
 use Models\PersonnageDAO;
+use Models\ElementDAO;
+use Models\UnitClassDAO;
+use Models\OriginDAO;
 
 class PersoController
 {
@@ -20,88 +23,105 @@ class PersoController
     }
 
     /**
-     * Affiche le formulaire d’ajout (+ message éventuel)
+     * Affichage du formulaire d’ajout
      */
     public function displayAddPerso(?string $message = null): void
     {
+        $elements = (new ElementDAO())->getAll();
+        $classes  = (new UnitClassDAO())->getAll();
+        $origins  = (new OriginDAO())->getAll();
+
         echo $this->templates->render('add-perso', [
-            'message' => $message
+            "message"  => $message,
+            "elements" => $elements,
+            "classes"  => $classes,
+            "origins"  => $origins
         ]);
     }
 
     /**
-     * Ajoute réellement un personnage dans la base (ou JSON)
+     * Création du personnage
      */
     public function addPerso(array $data): void
     {
-        $id = uniqid();
-
-        $perso = new \Models\Personnage();
+        $perso = new Personnage();
         $perso->hydrate([
-            "id"        => $id,
+            "id"        => uniqid(),
             "name"      => $data["name"],
-            "element"   => $data["element"],
-            "unitclass" => $data["class"],
+            "element"   => (int)$data["element"],
+            "unitclass" => (int)$data["unitclass"],
             "rarity"    => (int)$data["rarity"],
-            "origin"    => $data["origin"],
-            "urlImg"    => $data["image"],
+            "origin"    => ($data["origin"] === "" ? null : (int)$data["origin"]),
+            "urlImg"    => $data["image"]
         ]);
 
-        $dao = new \Models\PersonnageDAO();
-        $dao->createPersonnage($perso);
+        $this->dao->createPersonnage($perso);
 
-        // Retour à l’accueil avec message
+        // Redirection vers l'accueil
         $this->mainController->index("Personnage créé !");
     }
 
+    /**
+     * Suppression
+     */
     public function deletePerso(string $id): void
     {
-        $dao = new \Models\PersonnageDAO();
-        $dao->deletePersonnage($id);
+        $this->dao->deletePersonnage($id);
+        $this->mainController->index("Personnage supprimé !");
 
-        $this->mainController->index("Personnage supprimé avec succès !");
     }
 
-    public function displayEditPerso(string $id, string $message = null): void
+    /**
+     * Affichage du formulaire d'édition
+     */
+    public function displayEditPerso(string $id, ?string $message = null): void
     {
-        $dao = new \Models\PersonnageDAO();
-        $perso = $dao->getById($id);
+        $perso = $this->dao->getById($id);
+
+        $elements = (new ElementDAO())->getAll();
+        $classes  = (new UnitClassDAO())->getAll();
+        $origins  = (new OriginDAO())->getAll();
 
         echo $this->templates->render('edit-perso', [
-            "perso" => $perso,
-            "message" => $message
+            "perso"    => $perso,
+            "message"  => $message,
+            "elements" => $elements,
+            "classes"  => $classes,
+            "origins"  => $origins
         ]);
     }
 
+    /**
+     * Enregistrement de l’édition
+     */
     public function editPersoAndIndex(array $data): void
     {
-        $dao = new \Models\PersonnageDAO();
-
-        $perso = new \Models\Personnage();
+        $perso = new Personnage();
         $perso->hydrate([
             "id"        => $data["id"],
             "name"      => $data["name"],
-            "element"   => $data["element"],
-            "unitclass" => $data["class"],
+            "element"   => (int)$data["element"],
+            "unitclass" => (int)$data["unitclass"],
             "rarity"    => (int)$data["rarity"],
-            "origin"    => $data["origin"],
-            "urlImg"    => $data["image"],
+            "origin"    => ($data["origin"] === "" ? null : (int)$data["origin"]),
+            "urlImg"    => $data["image"]
         ]);
 
-        $dao->editPersonnage($perso);
+        $this->dao->editPersonnage($perso);
 
         $this->mainController->index("Personnage modifié !");
+
     }
 
+    /**
+     * Affichage d’un détail
+     */
     public function displayDetail(string $id): void
     {
-        $dao = new \Models\PersonnageDAO();
-        $perso = $dao->getById($id);
+        $perso = $this->dao->getById($id);
 
         echo $this->templates->render('detail-perso', [
             "perso" => $perso
         ]);
     }
-
-
 }

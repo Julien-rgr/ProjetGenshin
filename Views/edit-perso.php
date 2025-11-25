@@ -31,12 +31,10 @@
         <div class="form-group">
             <label>Élément :</label>
             <select name="element">
-                <?php
-                $elements = ["pyro", "hydro", "anemo", "cryo", "electro", "geo", "dendro"];
-                foreach ($elements as $el) :
-                    ?>
-                    <option value="<?= $el ?>" <?= $perso->getElement() === $el ? 'selected' : '' ?>>
-                        <?= ucfirst($el) ?>
+                <?php foreach ($elements as $e): ?>
+                    <option value="<?= $e['id'] ?>"
+                            <?= ($perso->getElement() == $e['id']) ? 'selected' : '' ?>>
+                        <?= $this->e($e['name']) ?>
                     </option>
                 <?php endforeach; ?>
             </select>
@@ -45,13 +43,11 @@
         <!-- CLASSE -->
         <div class="form-group">
             <label>Classe :</label>
-            <select name="class">
-                <?php
-                $classes = ["épéiste", "archer", "catalyseur", "polemiste", "claymore"];
-                foreach ($classes as $cl) :
-                    ?>
-                    <option value="<?= $cl ?>" <?= $perso->getUnitclass() === $cl ? 'selected' : '' ?>>
-                        <?= ucfirst($cl) ?>
+            <select name="unitclass">
+                <?php foreach ($classes as $c): ?>
+                    <option value="<?= $c['id'] ?>"
+                            <?= ($perso->getUnitclass() == $c['id']) ? 'selected' : '' ?>>
+                        <?= $this->e($c['name']) ?>
                     </option>
                 <?php endforeach; ?>
             </select>
@@ -61,12 +57,14 @@
         <div class="form-group">
             <label>Origine :</label>
             <select name="origin">
-                <?php
-                $origines = ["mondstadt","liyue","inazuma","sumeru","fontaine","natlan","snezhnaya", "Nod-Kraî"];
-                foreach ($origines as $or) :
-                    ?>
-                    <option value="<?= $or ?>" <?= $perso->getOrigin() === $or ? 'selected' : '' ?>>
-                        <?= ucfirst($or) ?>
+                <option value="" <?= $perso->getOrigin() === null ? 'selected' : '' ?>>
+                    Aucune
+                </option>
+
+                <?php foreach ($origins as $o): ?>
+                    <option value="<?= $o['id'] ?>"
+                            <?= ($perso->getOrigin() == $o['id']) ? 'selected' : '' ?>>
+                        <?= $this->e($o['name']) ?>
                     </option>
                 <?php endforeach; ?>
             </select>
@@ -78,7 +76,7 @@
             <select name="rarity">
                 <?php for ($i = 1; $i <= 5; $i++): ?>
                     <option value="<?= $i ?>" <?= $perso->getRarity() == $i ? 'selected' : '' ?>>
-                        ⭐ <?= $i ?>
+                        <?= str_repeat("⭐", $i) ?>
                     </option>
                 <?php endfor; ?>
             </select>

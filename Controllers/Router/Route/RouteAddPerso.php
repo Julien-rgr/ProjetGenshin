@@ -17,31 +17,31 @@ class RouteAddPerso extends Route
 
     public function get($params = []): void
     {
-        // GET = afficher le formulaire SANS PARAMÈTRE
+        // GET → afficher le formulaire d’ajout
         $this->persoController->displayAddPerso();
     }
 
     public function post($params = []): void
     {
         try {
-            // Récupération sécurisée des données du formulaire
+
+            // 🔥 Correction totale → cohérent avec le formulaire et la BDD
             $data = [
-                "name"    => $this->getParam($params, "name", false),
-                "image"   => $this->getParam($params, "image", false),
-                "element" => $this->getParam($params, "element", false),
-                "class"   => $this->getParam($params, "class", false),
-                "origin"  => $this->getParam($params, "origin", false),
-                "rarity"  => $this->getParam($params, "rarity", false),
+                "name"      => $this->getParam($params, "name", false),
+                "image"     => $this->getParam($params, "image", false),
+                "element"   => $this->getParam($params, "element", false),
+                "unitclass" => $this->getParam($params, "unitclass", false),   // ← CHANGÉ !
+                "origin"    => $params["origin"] ?? "",   // nullable
+                "rarity"    => $this->getParam($params, "rarity", false),
             ];
 
-            // Appel au contrôleur pour créer le personnage
+            // Création du personnage
             $this->persoController->addPerso($data);
 
         } catch (\Exception $e) {
 
-            // Si une erreur survient, on renvoie vers le formulaire avec un message
+            // Retour au formulaire en cas d’erreur
             $this->persoController->displayAddPerso($e->getMessage());
         }
     }
-
 }

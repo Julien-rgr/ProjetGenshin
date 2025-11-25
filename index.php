@@ -16,6 +16,7 @@ $loader->addNamespace('\Config', '/Config');
 $loader->addNamespace('\Controllers\Router', '/Controllers/Router');
 $loader->addNamespace('\Controllers\Router\Route', '/Controllers/Router/Route');
 
+
 try {
 
     $router = new Router();

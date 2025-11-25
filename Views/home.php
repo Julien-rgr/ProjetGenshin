@@ -22,25 +22,39 @@
     </form>
 
 
-
-    <!-- 🔥 Message global (création, suppression, update) -->
+    <!-- 🔥 Message global -->
     <?php if (!empty($message)) : ?>
         <div class="message-box">
             <?= $this->e($message) ?>
         </div>
     <?php endif; ?>
 
+
     <?php if (!empty($listPersonnage)) : ?>
         <div class="characters-grid">
+
             <?php foreach ($listPersonnage as $p) : ?>
                 <div class="character-card" style="background-image: url('<?= $this->e($p->getUrlImg()) ?>');">
+
                     <div class="character-overlay">
+
                         <h2><?= $this->e($p->getName()) ?></h2>
 
-                        <p><strong>Élément :</strong> <?= $this->e($p->getElement()) ?></p>
-                        <p><strong>Classe :</strong> <?= $this->e($p->getUnitclass()) ?></p>
-                        <p><strong>Origine :</strong> <?= $this->e($p->getOrigin() ?? 'Inconnue') ?></p>
-                        <p><strong>Rareté :</strong> ⭐<?= $this->e($p->getRarity()) ?></p>
+                        <p><strong>Élément :</strong>
+                            <?= $this->e($p->getElementName()) ?>
+                        </p>
+
+                        <p><strong>Classe :</strong>
+                            <?= $this->e($p->getUnitclassName()) ?>
+                        </p>
+
+                        <p><strong>Origine :</strong>
+                            <?= $this->e($p->getOriginName() ?? 'Inconnue') ?>
+                        </p>
+
+                        <p><strong>Rareté :</strong>
+                            <?= str_repeat("⭐", $p->getRarity()) ?>
+                        </p>
 
                         <div class="actions">
                             <a href="index.php?action=detail-perso&id=<?= $p->getId() ?>" class="btn">👁 Voir</a>
@@ -56,8 +70,10 @@
                         </div>
 
                     </div>
+
                 </div>
             <?php endforeach; ?>
+
         </div>
 
     <?php else : ?>
