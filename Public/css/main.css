@@ -329,3 +329,40 @@ body {
     box-shadow: 0 4px 12px rgba(74, 144, 255, 0.4);
 }
 
+.logs-container {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 1rem;
+}
+
+.logs-table-wrapper {
+    overflow-x: auto;
+}
+
+.logs-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(255,255,255,0.05);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.logs-table thead {
+    background: rgba(255,255,255,0.1);
+}
+
+.logs-table th, .logs-table td {
+    padding: 0.9rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.logs-table tbody tr:hover {
+    background: rgba(255,255,255,0.08);
+}
+
+.logs-table th {
+    color: #ffce57;
+    font-weight: 700;
+}
+

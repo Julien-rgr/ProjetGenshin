@@ -1,0 +1,214 @@
+
+USE projetgenshin;
+
+CREATE TABLE Personnage (
+                            id varchar(50) primary key,
+                            name varchar(255) NOT NULL,
+                            element varchar(255) NOT NULL,
+                            unitclass varchar(255) NOT NULL,
+                            origin varchar(255),
+                            rarity int(11) NOT NULL,
+                            url_img varchar(255) NOT NULL
+) ENGINE InnoDB;
+
+INSERT INTO Personnage (id, name, element, unitclass, origin, rarity, url_img) VALUES (
+                                                                                          '1',
+                                                                                          'Aino',
+                                                                                          'Hydro',
+                                                                                          'Claymore',
+                                                                                          'Nod-Krai',
+                                                                                          4,
+                                                                                          'https://static.wikia.nocookie.net/gensin-impact/images/e/e5/Aino_Card.png/revision/latest?cb=20250805151448'
+                                                                                      );
+
+INSERT INTO Personnage (id, name, element, unitclass, origin, rarity, url_img) VALUES (
+                                                                                          '2',
+                                                                                          'Amber',
+                                                                                          'Pyro',
+                                                                                          'Bow',
+                                                                                          'Mondstadt',
+                                                                                          4,
+                                                                                          'https://static.wikia.nocookie.net/gensin-impact/images/f/ff/Amber_Card.png/revision/latest?cb=20220725204839'
+                                                                                      );
+
+DROP TABLE IF EXISTS Personnage;
+DROP TABLE IF EXISTS Element;
+DROP TABLE IF EXISTS Origin;
+DROP TABLE IF EXISTS UnitClass;
+
+CREATE TABLE Element (
+                         id INT AUTO_INCREMENT PRIMARY KEY,
+                         name VARCHAR(255) NOT NULL,
+                         url_img VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE Origin (
+                        id INT AUTO_INCREMENT PRIMARY KEY,
+                        name VARCHAR(255) NOT NULL,
+                        url_img VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE UnitClass (
+                           id INT AUTO_INCREMENT PRIMARY KEY,
+                           name VARCHAR(255) NOT NULL,
+                           url_img VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE Personnage (
+                            id VARCHAR(50) PRIMARY KEY,
+                            name VARCHAR(255) NOT NULL,
+                            element INT NOT NULL,
+                            unitclass INT NOT NULL,
+                            origin INT NULL,
+                            rarity INT NOT NULL,
+                            url_img VARCHAR(255) NOT NULL,
+                            CONSTRAINT fk_element FOREIGN KEY (element) REFERENCES Element(id) ON DELETE CASCADE ON UPDATE CASCADE,
+                            CONSTRAINT fk_unitclass FOREIGN KEY (unitclass) REFERENCES UnitClass(id) ON DELETE CASCADE ON UPDATE CASCADE,
+                            CONSTRAINT fk_origin FOREIGN KEY (origin) REFERENCES Origin(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- Table ELEMENT
+INSERT INTO ELEMENT (name, url_img) VALUES
+                                        ('Pyro', 'https://static.wikia.nocookie.net/gensin-impact/images/1/1f/Element_Pyro.png'),
+                                        ('Hydro', 'https://static.wikia.nocookie.net/gensin-impact/images/3/3a/Element_Hydro.png'),
+                                        ('Cryo', 'https://static.wikia.nocookie.net/gensin-impact/images/7/7a/Element_Cryo.png'),
+                                        ('Electro', 'https://static.wikia.nocookie.net/gensin-impact/images/b/b7/Element_Electro.png'),
+                                        ('Geo', 'https://static.wikia.nocookie.net/gensin-impact/images/8/8b/Element_Geo.png'),
+                                        ('Anemo', 'https://static.wikia.nocookie.net/gensin-impact/images/a/a0/Element_Anemo.png');
+
+-- Table UNITCLASS
+INSERT INTO UNITCLASS (name, url_img) VALUES
+                                          ('Épéiste', 'https://static.wikia.nocookie.net/gensin-impact/images/4/49/Icon_Sword.png'),
+                                          ('Archer', 'https://static.wikia.nocookie.net/gensin-impact/images/3/31/Icon_Bow.png'),
+                                          ('Mage', 'https://static.wikia.nocookie.net/gensin-impact/images/8/8f/Icon_Catalyst.png'),
+                                          ('Lance', 'https://static.wikia.nocookie.net/gensin-impact/images/b/b0/Icon_Polearm.png'),
+                                          ('Claymore', 'https://static.wikia.nocookie.net/gensin-impact/images/3/3b/Icon_Claymore.png');
+
+-- Table ORIGIN
+INSERT INTO ORIGIN (name, url_img) VALUES
+                                       ('Mondstadt', 'https://static.wikia.nocookie.net/gensin-impact/images/f/f3/Region_Mondstadt.png'),
+                                       ('Liyue', 'https://static.wikia.nocookie.net/gensin-impact/images/9/9b/Region_Liyue.png'),
+                                       ('Inazuma', 'https://static.wikia.nocookie.net/gensin-impact/images/2/2e/Region_Inazuma.png'),
+                                       ('Sumeru', 'https://static.wikia.nocookie.net/gensin-impact/images/5/52/Region_Sumeru.png'),
+                                       ('Fontaine', 'https://static.wikia.nocookie.net/gensin-impact/images/b/b3/Region_Fontaine.png');
+
+CREATE TABLE users(
+    id varchar(50) PRIMARY KEY,
+    username varchar(255) NOT NULL,
+    hash_pwd varchar(255) NOT NULL);
+
+INSERT INTO USERS (id, username, hash_pwd) VALUES
+                                               ('user1', 'test', '$2y$10$8BYp3g0S02xj5/0U4NhrbePS.3WqgJkMuD7/sPDceCJdAm07IAG1u'),
+                                               ('user2', 'admin', '$2y$10$SmgW0U0NqGMybM2jL0.jMeF3AjqDnY7gE1rMja4xS5t.ZpBhpLrBi');
+
+INSERT INTO USERS (id, username, hash_pwd)
+VALUES ('2', 'admin', '$2y$12$aSyJbiwlejbLFFEvQV8LuOPbUajBqmUcq/BblUBWn2vAT6lftvdYa');
+
+INSERT INTO USERS (id, username, hash_pwd)
+VALUES ('1', 'test', '$2y$12$btZiTI5qeAUHQFlQskxdGOSRKFU6N9qymzShrHpTMWQURjcgVXWje');
+
+CREATE TABLE collection (
+                            id_user INT NOT NULL,
+                            id_perso CHAR(36) NOT NULL,
+                            PRIMARY KEY (id_user, id_perso),
+                            FOREIGN KEY (id_user) REFERENCES users(id),
+                            FOREIGN KEY (id_perso) REFERENCES personnage(id)
+);
+
+ALTER TABLE personnage
+ADD COLUMN id_element INT NOT NULL,
+ADD CONSTRAINT fk_personnage_element
+    FOREIGN KEY (id_element) REFERENCES element(id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+
+CREATE TABLE personnage_elements (
+    id_personnage VARCHAR(50) NOT NULL,
+    id_element INT NOT NULL,
+
+    PRIMARY KEY (id_personnage, id_element),
+
+    FOREIGN KEY (id_personnage)
+        REFERENCES personnage(id)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+
+    FOREIGN KEY (id_element)
+        REFERENCES element(id)
+        ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE element_multi (
+    id_perso VARCHAR(50) NOT NULL,
+    id_element INT NOT NULL,
+
+    FOREIGN KEY (id_perso) REFERENCES personnage(id)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+
+    FOREIGN KEY (id_element) REFERENCES element(id)
+        ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+ALTER TABLE personnage
+DROP FOREIGN KEY fk_element,
+DROP FOREIGN KEY fk_unitclass,
+DROP FOREIGN KEY fk_origin;
+
+ALTER TABLE personnage
+ADD CONSTRAINT fk_element
+    FOREIGN KEY (element) REFERENCES element(id)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT fk_unitclass
+    FOREIGN KEY (unitclass) REFERENCES unitclass(id)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT fk_origin
+    FOREIGN KEY (origin) REFERENCES origin(id)
+    ON DELETE SET NULL ON UPDATE CASCADE;
+
+use prejetgenshin;
+
+
+CREATE TABLE logs (
+    id_log INT AUTO_INCREMENT PRIMARY KEY,
+    action VARCHAR(255) NOT NULL,
+    id_user INT NULL,
+    date_log DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+ALTER TABLE logs
+ADD COLUMN action_type VARCHAR(255) NOT NULL AFTER id_log,
+ADD COLUMN details TEXT AFTER action_type,
+ADD COLUMN created_at DATETIME DEFAULT CURRENT_TIMESTAMP AFTER details;
+
+ALTER TABLE personnage
+MODIFY id_element INT NULL;
+
+
+
+INSERT INTO personnage (id, name, element, unitclass, origin, rarity, url_img)
+SELECT UUID(), 'Albedo', 5, 1, 1, 5, 'https://static.wikia.nocookie.net/gensin-impact/images/0/01/Albedo_Card.png'
+UNION ALL
+SELECT UUID(), 'Aloy', 3, 2, NULL, 5, 'https://static.wikia.nocookie.net/gensin-impact/images/c/cd/Aloy_Card.png'
+UNION ALL
+SELECT UUID(), 'Amber', 1, 2, 1, 4, 'https://static.wikia.nocookie.net/gensin-impact/images/f/ff/Amber_Card.png'
+UNION ALL
+SELECT UUID(), 'Arataki Itto', 5, 5, 3, 5, 'https://static.wikia.nocookie.net/gensin-impact/images/9/9d/Arataki_Itto_Card.png'
+UNION ALL
+SELECT UUID(), 'Barbara', 2, 3, 1, 4, 'https://static.wikia.nocookie.net/gensin-impact/images/1/1f/Barbara_Card.png'
+UNION ALL
+SELECT UUID(), 'Beidou', 4, 5, 2, 4, 'https://static.wikia.nocookie.net/gensin-impact/images/c/c0/Beidou_Card.png'
+UNION ALL
+SELECT UUID(), 'Bennett', 1, 1, 1, 4, 'https://static.wikia.nocookie.net/gensin-impact/images/c/c5/Bennett_Card.png'
+UNION ALL
+SELECT UUID(), 'Candace', 2, 4, 4, 4, 'https://static.wikia.nocookie.net/gensin-impact/images/5/58/Candace_Card.png'
+UNION ALL
+SELECT UUID(), 'Charlotte', 3, 3, 5, 4, 'https://static.wikia.nocookie.net/gensin-impact/images/b/bf/Charlotte_Card.png'
+UNION ALL
+SELECT UUID(), 'Chevreuse', 1, 4, 5, 4, 'https://static.wikia.nocookie.net/gensin-impact/images/6/65/Chevreuse_Card.png'
+UNION ALL
+SELECT UUID(), 'Chiori', 5, 1, 3, 5, 'https://static.wikia.nocookie.net/gensin-impact/images/6/62/Chiori_Card.png';
+
+
+
+
+
+

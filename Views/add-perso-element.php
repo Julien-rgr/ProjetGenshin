@@ -12,19 +12,16 @@
 
     <form method="post" action="index.php?action=add-perso-element">
 
-        <!-- Nom -->
         <div class="form-group">
             <label>Nom :</label>
             <input type="text" name="name" required>
         </div>
 
-        <!-- Image -->
         <div class="form-group">
             <label>URL de l'image :</label>
             <input type="text" name="image" placeholder="URL de l'icône">
         </div>
 
-        <!-- Type -->
         <div class="form-group">
             <label>Type :</label>
             <select name="type" required>

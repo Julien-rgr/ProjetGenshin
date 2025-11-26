@@ -4,7 +4,6 @@
 
     <h1 class="page-title">Collection des Personnages</h1>
 
-    <!-- Menu de tri -->
     <form method="get" class="sorting-bar">
         <input type="hidden" name="action" value="index">
 
@@ -21,14 +20,11 @@
         <button class="sort-btn" type="submit">Trier</button>
     </form>
 
-
-    <!-- 🔥 Message global -->
     <?php if (!empty($message)) : ?>
         <div class="message-box">
             <?= $this->e($message) ?>
         </div>
     <?php endif; ?>
-
 
     <?php if (!empty($listPersonnage)) : ?>
         <div class="characters-grid">

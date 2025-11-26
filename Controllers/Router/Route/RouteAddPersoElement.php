@@ -9,13 +9,19 @@ class RouteAddPersoElement extends Route
 {
     private ElementController $elementController;
 
+    /**
+     * @param ElementController $elementController
+     */
     public function __construct(ElementController $elementController)
     {
         $this->elementController = $elementController;
     }
 
     /**
-     * GET → afficher le formulaire d’ajout
+     * Affiche le formulaire d’ajout d’un élément / classe / origine.
+     *
+     * @param array $params
+     * @return void
      */
     public function get($params = []): void
     {
@@ -23,12 +29,14 @@ class RouteAddPersoElement extends Route
     }
 
     /**
-     * POST → traiter l’ajout
+     * Traite la création d’un nouvel élément (élément / classe / origine).
+     *
+     * @param array $params
+     * @return void
      */
     public function post($params = []): void
     {
         try {
-
             $data = [
                 "name"  => $this->getParam($params, "name", false),
                 "image" => $this->getParam($params, "image", false),
@@ -38,8 +46,6 @@ class RouteAddPersoElement extends Route
             $this->elementController->addElement($data);
 
         } catch (\Exception $e) {
-
-            // Réaffiche le formulaire avec le message d’erreur
             $this->elementController->displayAddElement($e->getMessage());
         }
     }

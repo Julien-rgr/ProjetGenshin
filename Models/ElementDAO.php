@@ -4,7 +4,9 @@ namespace Models;
 class ElementDAO extends BasePDODAO
 {
     /**
-     * Retourne tous les éléments triés par nom
+     * Retourne tous les éléments triés par nom.
+     *
+     * @return array Liste des éléments
      */
     public function getAll(): array
     {
@@ -13,7 +15,10 @@ class ElementDAO extends BasePDODAO
     }
 
     /**
-     * Retourne un élément selon son ID
+     * Retourne un élément selon son ID.
+     *
+     * @param int $id ID de l’élément
+     * @return array|null Élément trouvé ou null
      */
     public function getById(int $id): ?array
     {
@@ -23,7 +28,11 @@ class ElementDAO extends BasePDODAO
     }
 
     /**
-     * Crée un nouvel élément
+     * Crée un nouvel élément.
+     *
+     * @param string $name Nom de l’élément
+     * @param string $url  URL de l’image
+     * @return void
      */
     public function create(string $name, string $url): void
     {
@@ -35,7 +44,10 @@ class ElementDAO extends BasePDODAO
     }
 
     /**
-     * Supprime un élément
+     * Supprime un élément.
+     *
+     * @param int $id ID de l’élément
+     * @return void
      */
     public function delete(int $id): void
     {
@@ -44,7 +56,12 @@ class ElementDAO extends BasePDODAO
     }
 
     /**
-     * Met à jour un élément (nom + image)
+     * Met à jour un élément.
+     *
+     * @param int $id    ID de l’élément
+     * @param string $name Nouveau nom
+     * @param string $url  Nouvelle URL de l’image
+     * @return void
      */
     public function update(int $id, string $name, string $url): void
     {

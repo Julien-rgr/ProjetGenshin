@@ -12,19 +12,16 @@
 
     <form method="post" action="index.php?action=add-perso">
 
-        <!-- NOM -->
         <div class="form-group">
             <label>Nom :</label>
             <input type="text" name="name" required>
         </div>
 
-        <!-- IMAGE -->
         <div class="form-group">
             <label>Image :</label>
             <input type="text" name="image" placeholder="URL de l'image">
         </div>
 
-        <!-- ÉLÉMENT -->
         <div class="form-group">
             <label>Élément :</label>
             <select name="element" required>
@@ -36,7 +33,6 @@
             </select>
         </div>
 
-        <!-- CLASSE -->
         <div class="form-group">
             <label>Classe :</label>
             <select name="unitclass" required>
@@ -48,7 +44,6 @@
             </select>
         </div>
 
-        <!-- ORIGINE -->
         <div class="form-group">
             <label>Origine :</label>
             <select name="origin">
@@ -61,7 +56,6 @@
             </select>
         </div>
 
-        <!-- RARETÉ -->
         <div class="form-group">
             <label>Rareté :</label>
             <select name="rarity" required>

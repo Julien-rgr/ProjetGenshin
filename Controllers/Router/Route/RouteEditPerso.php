@@ -9,47 +9,53 @@ class RouteEditPerso extends Route
 {
     private PersoController $persoController;
 
+    /**
+     * @param PersoController $persoController
+     */
     public function __construct(PersoController $persoController)
     {
-        parent::__construct(); // important !
+        parent::__construct();
         $this->persoController = $persoController;
     }
 
     /**
-     * GET : afficher le formulaire pré-rempli
+     * Affiche le formulaire d’édition pré-rempli d’un personnage.
+     *
+     * @param array $params
+     * @return void
      */
     public function get($params = []): void
     {
-        // Récupération de l'ID obligatoire
         $id = $this->getParam($params, "id", false);
-
-        // Affiche le formulaire rempli avec les infos du perso
         $this->persoController->displayEditPerso($id);
     }
 
     /**
-     * POST : enregistrer les modifications
+     * Enregistre les modifications d’un personnage et redirige vers l’accueil.
+     *
+     * @param array $params
+     * @return void
      */
     public function post($params = []): void
     {
         try {
-            // Récupération des données modifiées
             $data = [
                 "id"        => $this->getParam($params, "id", false),
                 "name"      => $this->getParam($params, "name", false),
                 "element"   => $this->getParam($params, "element", false),
-                "class"     => $this->getParam($params, "class", false),
+                "unitclass" => $this->getParam($params, "unitclass", false),
                 "rarity"    => (int)$this->getParam($params, "rarity", false),
-                "origin"    => $this->getParam($params, "origin", false),
+                "origin"    => $this->getParam($params, "origin", true),
                 "image"     => $this->getParam($params, "image", false),
             ];
 
-            // Mise à jour
             $this->persoController->editPersoAndIndex($data);
 
         } catch (\Exception $e) {
-            // En cas d'erreur → réaffiche le formulaire
-            $this->persoController->displayEditPerso($params["id"], $e->getMessage());
+            $this->persoController->displayEditPerso(
+                $params["id"] ?? "",
+                $e->getMessage()
+            );
         }
     }
 }

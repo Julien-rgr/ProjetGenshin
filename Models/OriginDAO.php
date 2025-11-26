@@ -5,7 +5,9 @@ namespace Models;
 class OriginDAO extends BasePDODAO
 {
     /**
-     * Récupère toutes les origines triées
+     * Retourne toutes les origines triées par nom.
+     *
+     * @return array Liste des origines
      */
     public function getAll(): array
     {
@@ -14,7 +16,10 @@ class OriginDAO extends BasePDODAO
     }
 
     /**
-     * Récupère une origine par ID
+     * Retourne une origine à partir de son identifiant.
+     *
+     * @param int $id Identifiant de l’origine
+     * @return array|null Origine trouvée ou null
      */
     public function getById(int $id): ?array
     {
@@ -24,7 +29,11 @@ class OriginDAO extends BasePDODAO
     }
 
     /**
-     * Ajoute une nouvelle origine
+     * Ajoute une nouvelle origine.
+     *
+     * @param string $name Nom de l’origine
+     * @param string $url  URL de l’image associée
+     * @return void
      */
     public function create(string $name, string $url): void
     {
@@ -36,7 +45,10 @@ class OriginDAO extends BasePDODAO
     }
 
     /**
-     * Supprime une origine
+     * Supprime une origine.
+     *
+     * @param int $id Identifiant de l’origine
+     * @return void
      */
     public function delete(int $id): void
     {
@@ -45,7 +57,12 @@ class OriginDAO extends BasePDODAO
     }
 
     /**
-     * Met à jour une origine
+     * Met à jour une origine existante.
+     *
+     * @param int    $id   Identifiant de l’origine
+     * @param string $name Nouveau nom
+     * @param string $url  Nouvelle URL d’image
+     * @return void
      */
     public function update(int $id, string $name, string $url): void
     {

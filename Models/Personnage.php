@@ -1,75 +1,247 @@
 <?php
 namespace Models;
 
-class Personnage {
+class Personnage
+{
     private ?string $id;
     private string $name;
-    private int $element;      // ID de la table element
-    private int $unitclass;    // ID de la table unitclass
+    private int $element;
+    private int $unitclass;
     private int $rarity;
-    private ?int $origin;      // ID de la table origin
+    private ?int $origin;
     private string $urlImg;
 
-    // --- NOUVEAUX CHAMPS (venant des JOIN SQL) ---
     private ?string $elementName = null;
     private ?string $unitclassName = null;
     private ?string $originName = null;
 
-    // ------------------------
-    // GETTERS / SETTERS de base
-    // ------------------------
+    /**
+     * Retourne l'identifiant du personnage.
+     *
+     * @return string|null
+     */
+    public function getId(): ?string
+    {
+        return $this->id;
+    }
 
-    public function getId(): ?string { return $this->id; }
-    public function setId(?string $id): void { $this->id = $id; }
+    /**
+     * Définit l'identifiant du personnage.
+     *
+     * @param string|null $id
+     * @return void
+     */
+    public function setId(?string $id): void
+    {
+        $this->id = $id;
+    }
 
-    public function getName(): string { return $this->name; }
-    public function setName(string $name): void { $this->name = $name; }
+    /**
+     * Retourne le nom du personnage.
+     *
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
 
-    public function getElement(): int { return $this->element; }
-    public function setElement(int $element): void { $this->element = $element; }
+    /**
+     * Définit le nom du personnage.
+     *
+     * @param string $name
+     * @return void
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
 
-    public function getUnitclass(): int { return $this->unitclass; }
-    public function setUnitclass(int $unitclass): void { $this->unitclass = $unitclass; }
+    /**
+     * Retourne l'identifiant de l'élément.
+     *
+     * @return int
+     */
+    public function getElement(): int
+    {
+        return $this->element;
+    }
 
-    public function getRarity(): int { return $this->rarity; }
-    public function setRarity(int $rarity): void { $this->rarity = $rarity; }
+    /**
+     * Définit l'identifiant de l'élément.
+     *
+     * @param int $element
+     * @return void
+     */
+    public function setElement(int $element): void
+    {
+        $this->element = $element;
+    }
 
-    public function getOrigin(): ?int { return $this->origin; }
-    public function setOrigin(?int $origin): void { $this->origin = $origin; }
+    /**
+     * Retourne l'identifiant de la classe.
+     *
+     * @return int
+     */
+    public function getUnitclass(): int
+    {
+        return $this->unitclass;
+    }
 
-    public function getUrlImg(): string { return $this->urlImg; }
-    public function setUrlImg(string $urlImg): void { $this->urlImg = $urlImg; }
+    /**
+     * Définit l'identifiant de la classe.
+     *
+     * @param int $unitclass
+     * @return void
+     */
+    public function setUnitclass(int $unitclass): void
+    {
+        $this->unitclass = $unitclass;
+    }
 
-    // ------------------------
-    // GETTERS / SETTERS des NOMS liés
-    // ------------------------
+    /**
+     * Retourne la rareté du personnage.
+     *
+     * @return int
+     */
+    public function getRarity(): int
+    {
+        return $this->rarity;
+    }
 
-    public function getElementName(): ?string { return $this->elementName; }
-    public function setElementName(?string $n): void { $this->elementName = $n; }
+    /**
+     * Définit la rareté du personnage.
+     *
+     * @param int $rarity
+     * @return void
+     */
+    public function setRarity(int $rarity): void
+    {
+        $this->rarity = $rarity;
+    }
 
-    public function getUnitclassName(): ?string { return $this->unitclassName; }
-    public function setUnitclassName(?string $n): void { $this->unitclassName = $n; }
+    /**
+     * Retourne l'identifiant de l'origine.
+     *
+     * @return int|null
+     */
+    public function getOrigin(): ?int
+    {
+        return $this->origin;
+    }
 
-    public function getOriginName(): ?string { return $this->originName; }
-    public function setOriginName(?string $n): void { $this->originName = $n; }
+    /**
+     * Définit l'origine du personnage.
+     *
+     * @param int|null $origin
+     * @return void
+     */
+    public function setOrigin(?int $origin): void
+    {
+        $this->origin = $origin;
+    }
 
-    // ------------------------
-    // Hydratation automatique
-    // ------------------------
+    /**
+     * Retourne l'URL de l'image.
+     *
+     * @return string
+     */
+    public function getUrlImg(): string
+    {
+        return $this->urlImg;
+    }
 
-    public function hydrate(array $data){
-        foreach ($data as $key => $value){
+    /**
+     * Définit l'URL de l'image.
+     *
+     * @param string $urlImg
+     * @return void
+     */
+    public function setUrlImg(string $urlImg): void
+    {
+        $this->urlImg = $urlImg;
+    }
 
-            // generate setter name
-            $method = 'set'.ucfirst($key);
+    /**
+     * Retourne le nom de l’élément lié.
+     *
+     * @return string|null
+     */
+    public function getElementName(): ?string
+    {
+        return $this->elementName;
+    }
 
-            // handle snake_case
-            while (($pos = mb_strpos($method, '_')) !== false){
+    /**
+     * Définit le nom de l’élément.
+     *
+     * @param string|null $name
+     * @return void
+     */
+    public function setElementName(?string $name): void
+    {
+        $this->elementName = $name;
+    }
+
+    /**
+     * Retourne le nom de la classe liée.
+     *
+     * @return string|null
+     */
+    public function getUnitclassName(): ?string
+    {
+        return $this->unitclassName;
+    }
+
+    /**
+     * Définit le nom de la classe.
+     *
+     * @param string|null $name
+     * @return void
+     */
+    public function setUnitclassName(?string $name): void
+    {
+        $this->unitclassName = $name;
+    }
+
+    /**
+     * Retourne le nom de l’origine liée.
+     *
+     * @return string|null
+     */
+    public function getOriginName(): ?string
+    {
+        return $this->originName;
+    }
+
+    /**
+     * Définit le nom de l’origine.
+     *
+     * @param string|null $name
+     * @return void
+     */
+    public function setOriginName(?string $name): void
+    {
+        $this->originName = $name;
+    }
+
+    /**
+     * Hydrate automatiquement l'objet avec un tableau associatif.
+     *
+     * @param array $data
+     * @return void
+     */
+    public function hydrate(array $data): void
+    {
+        foreach ($data as $key => $value) {
+            $method = 'set' . ucfirst($key);
+
+            while (($pos = mb_strpos($method, '_')) !== false) {
                 $method = mb_substr($method, 0, $pos)
                     . ucfirst(mb_substr($method, $pos + 1));
             }
 
-            if(method_exists($this, $method)){
+            if (method_exists($this, $method)) {
                 $this->$method($value);
             }
         }

@@ -12,22 +12,18 @@
 
     <form method="post" action="index.php?action=edit-perso">
 
-        <!-- ID caché -->
         <input type="hidden" name="id" value="<?= $this->e($perso->getId()) ?>">
 
-        <!-- NOM -->
         <div class="form-group">
             <label>Nom :</label>
             <input type="text" name="name" value="<?= $this->e($perso->getName()) ?>" required>
         </div>
 
-        <!-- IMAGE -->
         <div class="form-group">
             <label>Image :</label>
             <input type="text" name="image" value="<?= $this->e($perso->getUrlImg()) ?>">
         </div>
 
-        <!-- ÉLÉMENT -->
         <div class="form-group">
             <label>Élément :</label>
             <select name="element">
@@ -40,7 +36,6 @@
             </select>
         </div>
 
-        <!-- CLASSE -->
         <div class="form-group">
             <label>Classe :</label>
             <select name="unitclass">
@@ -53,7 +48,6 @@
             </select>
         </div>
 
-        <!-- ORIGINE -->
         <div class="form-group">
             <label>Origine :</label>
             <select name="origin">
@@ -70,7 +64,6 @@
             </select>
         </div>
 
-        <!-- RARETÉ -->
         <div class="form-group">
             <label>Rareté :</label>
             <select name="rarity">

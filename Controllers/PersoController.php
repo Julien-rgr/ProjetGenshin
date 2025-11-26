@@ -8,22 +8,31 @@ use Models\PersonnageDAO;
 use Models\ElementDAO;
 use Models\UnitClassDAO;
 use Models\OriginDAO;
+use Models\LogsDAO;
 
 class PersoController
 {
     private Engine $templates;
     private MainController $mainController;
     private PersonnageDAO $dao;
+    private LogsDAO $logsDAO;
 
+    /**
+     * @param Engine $templates Moteur de templates Plates
+     */
     public function __construct(Engine $templates)
     {
-        $this->templates = $templates;
+        $this->templates      = $templates;
         $this->mainController = new MainController($templates);
-        $this->dao = new PersonnageDAO();
+        $this->dao            = new PersonnageDAO();
+        $this->logsDAO        = new LogsDAO();
     }
 
     /**
-     * Affichage du formulaire d’ajout
+     * Affiche le formulaire d’ajout d’un personnage.
+     *
+     * @param string|null $message Message optionnel affiché au-dessus du formulaire
+     * @return void
      */
     public function displayAddPerso(?string $message = null): void
     {
@@ -40,7 +49,10 @@ class PersoController
     }
 
     /**
-     * Création du personnage
+     * Crée un nouveau personnage.
+     *
+     * @param array $data Données envoyées par le formulaire
+     * @return void
      */
     public function addPerso(array $data): void
     {
@@ -48,31 +60,44 @@ class PersoController
         $perso->hydrate([
             "id"        => uniqid(),
             "name"      => $data["name"],
-            "element"   => (int)$data["element"],
-            "unitclass" => (int)$data["unitclass"],
-            "rarity"    => (int)$data["rarity"],
-            "origin"    => ($data["origin"] === "" ? null : (int)$data["origin"]),
+            "element"   => (int) $data["element"],
+            "unitclass" => (int) $data["unitclass"],
+            "rarity"    => (int) $data["rarity"],
+            "origin"    => ($data["origin"] === "" ? null : (int) $data["origin"]),
             "urlImg"    => $data["image"]
         ]);
 
         $this->dao->createPersonnage($perso);
+        $this->logsDAO->addLog("Création du personnage : {$perso->getName()}", null);
 
-        // Redirection vers l'accueil
         $this->mainController->index("Personnage créé !");
     }
 
     /**
-     * Suppression
+     * Supprime un personnage par son ID.
+     *
+     * @param string $id Identifiant du personnage
+     * @return void
      */
     public function deletePerso(string $id): void
     {
-        $this->dao->deletePersonnage($id);
-        $this->mainController->index("Personnage supprimé !");
+        $p = $this->dao->getById($id);
 
+        $this->dao->deletePersonnage($id);
+
+        if ($p) {
+            $this->logsDAO->addLog("Suppression du personnage : {$p->getName()}", null);
+        }
+
+        $this->mainController->index("Personnage supprimé !");
     }
 
     /**
-     * Affichage du formulaire d'édition
+     * Affiche le formulaire d’édition d’un personnage.
+     *
+     * @param string      $id      Identifiant du personnage
+     * @param string|null $message Message d’erreur éventuel
+     * @return void
      */
     public function displayEditPerso(string $id, ?string $message = null): void
     {
@@ -92,7 +117,10 @@ class PersoController
     }
 
     /**
-     * Enregistrement de l’édition
+     * Enregistre les modifications effectuées sur un personnage.
+     *
+     * @param array $data Données modifiées provenant du formulaire d’édition
+     * @return void
      */
     public function editPersoAndIndex(array $data): void
     {
@@ -100,21 +128,24 @@ class PersoController
         $perso->hydrate([
             "id"        => $data["id"],
             "name"      => $data["name"],
-            "element"   => (int)$data["element"],
-            "unitclass" => (int)$data["unitclass"],
-            "rarity"    => (int)$data["rarity"],
-            "origin"    => ($data["origin"] === "" ? null : (int)$data["origin"]),
+            "element"   => (int) $data["element"],
+            "unitclass" => (int) $data["unitclass"],
+            "rarity"    => (int) $data["rarity"],
+            "origin"    => ($data["origin"] === "" ? null : (int) $data["origin"]),
             "urlImg"    => $data["image"]
         ]);
 
         $this->dao->editPersonnage($perso);
+        $this->logsDAO->addLog("Modification du personnage : {$perso->getName()}", null);
 
         $this->mainController->index("Personnage modifié !");
-
     }
 
     /**
-     * Affichage d’un détail
+     * Affiche les détails d’un personnage.
+     *
+     * @param string $id Identifiant du personnage
+     * @return void
      */
     public function displayDetail(string $id): void
     {
